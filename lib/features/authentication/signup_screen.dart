@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:ticktok/constants/gaps.dart';
 import 'package:ticktok/constants/sizes.dart';
-import 'package:ticktok/features/authentication/email_screen.dart';
+import 'package:ticktok/features/authentication/username_screen.dart';
 import 'package:ticktok/features/authentication/login_screen.dart';
 import 'package:ticktok/features/authentication/widgets/auth_button.dart';
 
@@ -20,7 +20,7 @@ class SignUpScreen extends StatelessWidget {
   void _onSignUpButtonTapped(BuildContext context) {
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => const EmailScreen(),
+        builder: (context) => const UsernameScreen(),
       ),
     );
   }
