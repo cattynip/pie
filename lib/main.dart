@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ticktok/constants/gaps.dart';
-import 'package:ticktok/constants/sizes.dart';
+import 'package:ticktok/screens/signup/signup_screen.dart';
 
 void main() {
   runApp(const TickTokApp());
@@ -18,20 +17,7 @@ class TickTokApp extends StatelessWidget {
         useMaterial3: true,
         primaryColor: const Color(0xFFE9435A),
       ),
-      home: Scaffold(
-        body: Padding(
-          padding: const EdgeInsets.all(Sizes.size14),
-          child: Container(
-            child: const Column(
-              children: [
-                Text("dajfklasjfkl"),
-                Gaps.v20,
-                Text("jsfkljafkasdf"),
-              ],
-            ),
-          ),
-        ),
-      ),
+      home: const SignUpScreen(),
     );
   }
 }
