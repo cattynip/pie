@@ -1,8 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:ticktok/constants/gaps.dart';
 import 'package:ticktok/constants/sizes.dart';
-import 'package:ticktok/features/authentication/signup_screen.dart';
+import 'package:ticktok/features/authentication/widgets/auth_button.dart';
 
 class LogInScreen extends StatelessWidget {
   const LogInScreen({super.key});
@@ -36,6 +36,22 @@ class LogInScreen extends StatelessWidget {
                 ),
                 textAlign: TextAlign.center,
               ),
+              Gaps.v40,
+              AuthButton(
+                buttonText: "Use email & password",
+                buttonIcon: FaIcon(
+                  FontAwesomeIcons.user,
+                  size: Sizes.size16,
+                ),
+              ),
+              Gaps.v16,
+              AuthButton(
+                buttonText: "Continue with Apple",
+                buttonIcon: FaIcon(
+                  FontAwesomeIcons.apple,
+                  size: Sizes.size20,
+                ),
+              )
             ],
           ),
         ),
