@@ -32,10 +32,32 @@ class _UsernameScreenState extends State<UsernameScreen> {
     super.dispose();
   }
 
-  void _onUsernameButtonTapped(BuildContext context) {
+  void _onUsernameSubmitted() {
+    if (_isUsernameEmpty() || _isUsernameValid() != null) return;
+
     Navigator.of(context).push(MaterialPageRoute(
       builder: (context) => const EmailScreen(),
     ));
+  }
+
+  bool _isUsernameEmpty() {
+    return _username.isEmpty;
+  }
+
+  String? _isUsernameValid() {
+    if (_isUsernameEmpty()) return null;
+
+    final isUsernameShort = _username.length < 5;
+    if (isUsernameShort) return "Username is too short.";
+
+    final isUsernameLong = _username.length > 25;
+    if (isUsernameLong) return "Username is too long.";
+
+    final regExp = RegExp(r"^(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$");
+    final bool isUsernameValid = regExp.hasMatch(_username);
+    if (!isUsernameValid) return "Username is not valid.";
+
+    return null;
   }
 
   @override
@@ -69,9 +91,14 @@ class _UsernameScreenState extends State<UsernameScreen> {
             ),
             Gaps.v16,
             TextField(
+              keyboardType: TextInputType.text,
+              autocorrect: false,
               controller: _usernameController,
+              onSubmitted: (value) => _onUsernameSubmitted(),
+              onEditingComplete: () => _onUsernameSubmitted(),
               decoration: InputDecoration(
                 hintText: "Username",
+                errorText: _isUsernameValid(),
                 enabledBorder: UnderlineInputBorder(
                   borderSide: BorderSide(
                     color: Colors.grey.shade400,
@@ -87,8 +114,8 @@ class _UsernameScreenState extends State<UsernameScreen> {
             ),
             Gaps.v16,
             FormButton(
-              onButtonTapped: _onUsernameButtonTapped,
-              disabled: _username.isEmpty,
+              onButtonTapped: (context) => _onUsernameSubmitted(),
+              disabled: _isUsernameEmpty() || _isUsernameValid() != null,
             )
           ],
         ),

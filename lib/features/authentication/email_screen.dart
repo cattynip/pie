@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:ticktok/constants/gaps.dart';
 import 'package:ticktok/constants/sizes.dart';
 import 'package:ticktok/features/authentication/password_screen.dart';
-import 'package:ticktok/features/authentication/signup_screen.dart';
 import 'package:ticktok/features/authentication/widgets/form_button.dart';
 
 class EmailScreen extends StatefulWidget {
@@ -37,7 +36,7 @@ class _EmailScreenState extends State<EmailScreen> {
     FocusScope.of(context).unfocus();
   }
 
-  void _onSubmitted() {
+  void _onEmailSubmitted() {
     if (_isEmailEmpty() || _isEmailValid() != null) return;
 
     Navigator.of(context).push(
@@ -59,7 +58,7 @@ class _EmailScreenState extends State<EmailScreen> {
     );
 
     final bool isEmailValid = regExp.hasMatch(_email);
-    if (!isEmailValid) return "Email Not Valid.";
+    if (!isEmailValid) return "Email is not valid.";
 
     return null;
   }
@@ -100,8 +99,8 @@ class _EmailScreenState extends State<EmailScreen> {
                 keyboardType: TextInputType.emailAddress,
                 autocorrect: false,
                 controller: _usernameController,
-                onSubmitted: (value) => _onSubmitted(),
-                onEditingComplete: () => _onSubmitted(),
+                onSubmitted: (value) => _onEmailSubmitted(),
+                onEditingComplete: () => _onEmailSubmitted(),
                 decoration: InputDecoration(
                   hintText: "Email",
                   errorText: _isEmailValid(),
@@ -120,7 +119,7 @@ class _EmailScreenState extends State<EmailScreen> {
               ),
               Gaps.v16,
               FormButton(
-                onButtonTapped: (context) => _onSubmitted(),
+                onButtonTapped: (context) => _onEmailSubmitted(),
                 disabled: _isEmailEmpty() || _isEmailValid() != null,
               )
             ],
