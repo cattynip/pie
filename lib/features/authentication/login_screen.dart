@@ -7,20 +7,24 @@ import 'package:ticktok/features/authentication/widgets/auth_button.dart';
 class LogInScreen extends StatelessWidget {
   const LogInScreen({super.key});
 
-  void onSignupTapped(BuildContext context) {
+  void _onSignupTapped(BuildContext context) {
     Navigator.of(context).pop();
+  }
+
+  void _onLoginButtonTapped(BuildContext context) {
+    print("Try to login");
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: const SafeArea(
+      body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: Sizes.size40),
+          padding: const EdgeInsets.symmetric(horizontal: Sizes.size40),
           child: Column(
             children: [
               Gaps.v80,
-              Text(
+              const Text(
                 "Log in to Ticktok",
                 style: TextStyle(
                   fontSize: Sizes.size24,
@@ -28,7 +32,7 @@ class LogInScreen extends StatelessWidget {
                 ),
               ),
               Gaps.v20,
-              Text(
+              const Text(
                 "Manage your account, check notifications, comment on videos, and more.",
                 style: TextStyle(
                   fontSize: Sizes.size16,
@@ -38,16 +42,20 @@ class LogInScreen extends StatelessWidget {
               ),
               Gaps.v40,
               AuthButton(
+                onButtonTapped: (buttonContext) =>
+                    _onLoginButtonTapped(buttonContext),
                 buttonText: "Use email & password",
-                buttonIcon: FaIcon(
+                buttonIcon: const FaIcon(
                   FontAwesomeIcons.user,
                   size: Sizes.size16,
                 ),
               ),
               Gaps.v16,
               AuthButton(
+                onButtonTapped: (buttonContext) =>
+                    _onLoginButtonTapped(buttonContext),
                 buttonText: "Continue with Apple",
-                buttonIcon: FaIcon(
+                buttonIcon: const FaIcon(
                   FontAwesomeIcons.apple,
                   size: Sizes.size20,
                 ),
@@ -66,7 +74,7 @@ class LogInScreen extends StatelessWidget {
             const Text("Don't have an account?"),
             Gaps.h7,
             GestureDetector(
-              onTap: () => onSignupTapped(context),
+              onTap: () => _onSignupTapped(context),
               child: Text(
                 "Sign up",
                 style: TextStyle(
