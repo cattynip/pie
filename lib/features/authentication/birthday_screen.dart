@@ -4,31 +4,31 @@ import 'package:ticktok/constants/sizes.dart';
 import 'package:ticktok/features/authentication/password_screen.dart';
 import 'package:ticktok/features/authentication/widgets/form_button.dart';
 
-class EmailScreen extends StatefulWidget {
-  const EmailScreen({super.key});
+class BirthdayScreen extends StatefulWidget {
+  const BirthdayScreen({super.key});
 
   @override
-  State<EmailScreen> createState() => _EmailScreenState();
+  State<BirthdayScreen> createState() => _BirthdayScreenState();
 }
 
-class _EmailScreenState extends State<EmailScreen> {
-  final TextEditingController _emailController = TextEditingController();
-  String _email = "";
+class _BirthdayScreenState extends State<BirthdayScreen> {
+  final TextEditingController _birthdayController = TextEditingController();
+  String _birthday = "";
 
   @override
   void initState() {
     super.initState();
 
-    _emailController.addListener(() {
+    _birthdayController.addListener(() {
       setState(() {
-        _email = _emailController.text;
+        _birthday = _birthdayController.text;
       });
     });
   }
 
   @override
   void dispose() {
-    _emailController.dispose();
+    _birthdayController.dispose();
     super.dispose();
   }
 
@@ -36,8 +36,8 @@ class _EmailScreenState extends State<EmailScreen> {
     FocusScope.of(context).unfocus();
   }
 
-  void _onEmailSubmitted() {
-    if (_isEmailEmpty() || _isEmailValid() != null) return;
+  void _onBirthdaySubmitted() {
+    if (_isBirthdayEmpty() || _isBirthdayValid() != null) return;
 
     Navigator.of(context).push(
       MaterialPageRoute(
@@ -46,19 +46,19 @@ class _EmailScreenState extends State<EmailScreen> {
     );
   }
 
-  bool _isEmailEmpty() {
-    return _email.isEmpty;
+  bool _isBirthdayEmpty() {
+    return _birthday.isEmpty;
   }
 
-  String? _isEmailValid() {
-    if (_isEmailEmpty()) return null;
+  String? _isBirthdayValid() {
+    if (_isBirthdayEmpty()) return null;
 
     final regExp = RegExp(
       r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+",
     );
 
-    final bool isEmailValid = regExp.hasMatch(_email);
-    if (!isEmailValid) return "Email is not valid.";
+    final bool isBirthdayValid = regExp.hasMatch(_birthday);
+    if (!isBirthdayValid) return "Birthday is not valid.";
 
     return null;
   }
@@ -80,7 +80,7 @@ class _EmailScreenState extends State<EmailScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Text(
-                "What is your email?",
+                "What is your birthday?",
                 style: TextStyle(
                   fontSize: Sizes.size24,
                   fontWeight: FontWeight.w700,
@@ -96,14 +96,13 @@ class _EmailScreenState extends State<EmailScreen> {
               ),
               Gaps.v16,
               TextField(
-                keyboardType: TextInputType.emailAddress,
                 autocorrect: false,
-                controller: _emailController,
-                onSubmitted: (value) => _onEmailSubmitted(),
-                onEditingComplete: () => _onEmailSubmitted(),
+                controller: _birthdayController,
+                onSubmitted: (value) => _onBirthdaySubmitted(),
+                onEditingComplete: () => _onBirthdaySubmitted(),
                 decoration: InputDecoration(
-                  hintText: "Email",
-                  errorText: _isEmailValid(),
+                  hintText: "Birthday",
+                  errorText: _isBirthdayValid(),
                   enabledBorder: UnderlineInputBorder(
                     borderSide: BorderSide(
                       color: Colors.grey.shade400,
@@ -119,8 +118,8 @@ class _EmailScreenState extends State<EmailScreen> {
               ),
               Gaps.v16,
               FormButton(
-                onButtonTapped: (context) => _onEmailSubmitted(),
-                disabled: _isEmailEmpty() || _isEmailValid() != null,
+                onButtonTapped: (context) => _onBirthdaySubmitted(),
+                disabled: _isBirthdayEmpty() || _isBirthdayValid() != null,
               )
             ],
           ),
