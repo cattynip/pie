@@ -4,11 +4,13 @@ import 'package:ticktok/constants/sizes.dart';
 class FormButton extends StatelessWidget {
   final bool disabled;
   final void Function(BuildContext) onButtonTapped;
+  final String buttonText;
 
   const FormButton({
     super.key,
     required this.disabled,
     required this.onButtonTapped,
+    this.buttonText = "Next",
   });
 
   @override
@@ -41,8 +43,8 @@ class FormButton extends StatelessWidget {
               fontSize: Sizes.size16,
               fontWeight: FontWeight.w500,
             ),
-            child: const Text(
-              "Next",
+            child: Text(
+              buttonText,
               textAlign: TextAlign.center,
             ),
           ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:ticktok/constants/gaps.dart';
 import 'package:ticktok/constants/sizes.dart';
+import 'package:ticktok/features/authentication/login_form_screen.dart';
 import 'package:ticktok/features/authentication/widgets/auth_button.dart';
 
 class LogInScreen extends StatelessWidget {
@@ -12,7 +13,11 @@ class LogInScreen extends StatelessWidget {
   }
 
   void _onLoginButtonTapped(BuildContext context) {
-    print("Try to login");
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => const LogInFormScreen(),
+      ),
+    );
   }
 
   @override

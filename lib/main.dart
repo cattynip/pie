@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ticktok/constants/sizes.dart';
+import 'package:ticktok/features/authentication/login_form_screen.dart';
 import 'package:ticktok/features/authentication/signup_screen.dart';
 
 void main() {
@@ -30,7 +31,7 @@ class TickTokApp extends StatelessWidget {
           centerTitle: true,
         ),
       ),
-      home: const SignUpScreen(),
+      home: const LogInFormScreen(),
     );
   }
 }
