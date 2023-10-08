@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:ticktok/constants/gaps.dart';
 import 'package:ticktok/constants/sizes.dart';
 import 'package:ticktok/features/authentication/password_screen.dart';
 import 'package:ticktok/features/authentication/widgets/form_button.dart';
+import 'package:ticktok/features/authentication/widgets/form_input.dart';
+import 'package:ticktok/features/authentication/widgets/instruction.dart';
 
 class EmailScreen extends StatefulWidget {
   const EmailScreen({super.key});
@@ -21,7 +22,7 @@ class _EmailScreenState extends State<EmailScreen> {
 
     _emailController.addListener(() {
       setState(() {
-        _email = _emailController.text;
+        _email = _emailController.value.text;
       });
     });
   }
@@ -37,7 +38,7 @@ class _EmailScreenState extends State<EmailScreen> {
   }
 
   void _onEmailSubmitted() {
-    if (_isEmailEmpty() || _isEmailValid() != null) return;
+    if (_isEmailEmpty() || _validateEmail() != null) return;
 
     Navigator.of(context).push(
       MaterialPageRoute(
@@ -46,11 +47,7 @@ class _EmailScreenState extends State<EmailScreen> {
     );
   }
 
-  bool _isEmailEmpty() {
-    return _email.isEmpty;
-  }
-
-  String? _isEmailValid() {
+  String? _validateEmail() {
     if (_isEmailEmpty()) return null;
 
     final regExp = RegExp(
@@ -61,6 +58,10 @@ class _EmailScreenState extends State<EmailScreen> {
     if (!isEmailValid) return "Email is not valid.";
 
     return null;
+  }
+
+  bool _isEmailEmpty() {
+    return _email.isEmpty;
   }
 
   @override
@@ -79,48 +80,21 @@ class _EmailScreenState extends State<EmailScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                "What is your email?",
-                style: TextStyle(
-                  fontSize: Sizes.size20,
-                  fontWeight: FontWeight.w700,
-                ),
+              const Instruction(
+                title: "What's your email?",
+                description:
+                    "You can get notifications, new ticktoks, and more.",
               ),
-              Gaps.v4,
-              const Text(
-                "You can get notifications, new ticktoks, and more.",
-                style: TextStyle(
-                  fontSize: Sizes.size14,
-                  color: Colors.black54,
-                ),
-              ),
-              Gaps.v16,
-              TextField(
+              FormInput(
+                hintText: "Email",
+                inputController: _emailController,
+                onSubmitted: _onEmailSubmitted,
+                validation: _validateEmail,
                 keyboardType: TextInputType.emailAddress,
-                autocorrect: false,
-                controller: _emailController,
-                onSubmitted: (value) => _onEmailSubmitted(),
-                onEditingComplete: () => _onEmailSubmitted(),
-                decoration: InputDecoration(
-                  hintText: "Email",
-                  errorText: _isEmailValid(),
-                  enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Colors.grey.shade400,
-                    ),
-                  ),
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Colors.grey.shade400,
-                    ),
-                  ),
-                ),
-                cursorColor: Theme.of(context).primaryColor,
               ),
-              Gaps.v16,
               FormButton(
                 onButtonTapped: (context) => _onEmailSubmitted(),
-                disabled: _isEmailEmpty() || _isEmailValid() != null,
+                disabled: _isEmailEmpty() || _validateEmail() != null,
               )
             ],
           ),

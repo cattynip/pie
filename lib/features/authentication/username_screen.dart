@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:ticktok/constants/gaps.dart';
 import 'package:ticktok/constants/sizes.dart';
 import 'package:ticktok/features/authentication/email_screen.dart';
 import 'package:ticktok/features/authentication/widgets/form_button.dart';
+import 'package:ticktok/features/authentication/widgets/form_input.dart';
+import 'package:ticktok/features/authentication/widgets/instruction.dart';
 
 class UsernameScreen extends StatefulWidget {
   const UsernameScreen({super.key});
@@ -21,7 +22,7 @@ class _UsernameScreenState extends State<UsernameScreen> {
 
     _usernameController.addListener(() {
       setState(() {
-        _username = _usernameController.text;
+        _username = _usernameController.value.text;
       });
     });
   }
@@ -32,19 +33,21 @@ class _UsernameScreenState extends State<UsernameScreen> {
     super.dispose();
   }
 
+  void _onScaffoldTapped() {
+    FocusScope.of(context).unfocus();
+  }
+
   void _onUsernameSubmitted() {
-    if (_isUsernameEmpty() || _isUsernameValid() != null) return;
+    if (_isUsernameEmpty() || _validateUsername() != null) return;
 
-    Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) => const EmailScreen(),
-    ));
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => const EmailScreen(),
+      ),
+    );
   }
 
-  bool _isUsernameEmpty() {
-    return _username.isEmpty;
-  }
-
-  String? _isUsernameValid() {
+  String? _validateUsername() {
     if (_isUsernameEmpty()) return null;
 
     final isUsernameShort = _username.length < 5;
@@ -60,64 +63,42 @@ class _UsernameScreenState extends State<UsernameScreen> {
     return null;
   }
 
+  bool _isUsernameEmpty() {
+    return _username.isEmpty;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Sign up"),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: Sizes.size28,
-          vertical: Sizes.size20,
+    return GestureDetector(
+      onTap: _onScaffoldTapped,
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text("Sign up"),
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              "Create username",
-              style: TextStyle(
-                fontSize: Sizes.size20,
-                fontWeight: FontWeight.w700,
+        body: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: Sizes.size28,
+            vertical: Sizes.size20,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Instruction(
+                title: "Create username",
+                description: "You can always change this later.",
               ),
-            ),
-            Gaps.v4,
-            const Text(
-              "You can always change this later.",
-              style: TextStyle(
-                fontSize: Sizes.size14,
-                color: Colors.black54,
-              ),
-            ),
-            Gaps.v16,
-            TextField(
-              keyboardType: TextInputType.text,
-              autocorrect: false,
-              controller: _usernameController,
-              onSubmitted: (value) => _onUsernameSubmitted(),
-              onEditingComplete: () => _onUsernameSubmitted(),
-              decoration: InputDecoration(
+              FormInput(
                 hintText: "Username",
-                errorText: _isUsernameValid(),
-                enabledBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Colors.grey.shade400,
-                  ),
-                ),
-                focusedBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Colors.grey.shade400,
-                  ),
-                ),
+                inputController: _usernameController,
+                onSubmitted: _onUsernameSubmitted,
+                validation: _validateUsername,
               ),
-              cursorColor: Theme.of(context).primaryColor,
-            ),
-            Gaps.v16,
-            FormButton(
-              onButtonTapped: (context) => _onUsernameSubmitted(),
-              disabled: _isUsernameEmpty() || _isUsernameValid() != null,
-            )
-          ],
+              FormButton(
+                onButtonTapped: (context) => _onUsernameSubmitted(),
+                disabled: _isUsernameEmpty() || _validateUsername() != null,
+              )
+            ],
+          ),
         ),
       ),
     );

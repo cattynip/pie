@@ -29,21 +29,25 @@ class LogInScreen extends StatelessWidget {
           child: Column(
             children: [
               Gaps.v80,
-              const Text(
-                "Log in to Ticktok",
-                style: TextStyle(
-                  fontSize: Sizes.size24,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-              Gaps.v20,
-              const Text(
-                "Manage your account, check notifications, comment on videos, and more.",
-                style: TextStyle(
-                  fontSize: Sizes.size16,
-                  color: Colors.black87,
-                ),
-                textAlign: TextAlign.center,
+              const Column(
+                children: [
+                  Text(
+                    "Log in to Ticktok",
+                    style: TextStyle(
+                      fontSize: Sizes.size24,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  Gaps.v20,
+                  Text(
+                    "Manage your account, check notifications, comment on videos, and more.",
+                    style: TextStyle(
+                      fontSize: Sizes.size16,
+                      color: Colors.black87,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
               ),
               Gaps.v40,
               AuthButton(

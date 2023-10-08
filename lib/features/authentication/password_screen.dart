@@ -4,6 +4,9 @@ import 'package:ticktok/constants/gaps.dart';
 import 'package:ticktok/constants/sizes.dart';
 import 'package:ticktok/features/authentication/birthday_screen.dart';
 import 'package:ticktok/features/authentication/widgets/form_button.dart';
+import 'package:ticktok/features/authentication/widgets/form_input.dart';
+import 'package:ticktok/features/authentication/widgets/input_check_box.dart';
+import 'package:ticktok/features/authentication/widgets/instruction.dart';
 
 class PasswordScreen extends StatefulWidget {
   const PasswordScreen({super.key});
@@ -23,7 +26,7 @@ class _PasswordScreenState extends State<PasswordScreen> {
 
     _passwordController.addListener(() {
       setState(() {
-        _password = _passwordController.text;
+        _password = _passwordController.value.text;
       });
     });
   }
@@ -38,6 +41,16 @@ class _PasswordScreenState extends State<PasswordScreen> {
     FocusScope.of(context).unfocus();
   }
 
+  void _onPasswordSubmitted() {
+    if (_isPasswordEmpty() || _validatePassword() != null) return;
+
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => const BirthdayScreen(),
+      ),
+    );
+  }
+
   void _onDeleteButtonTapped() {
     _passwordController.clear();
   }
@@ -48,14 +61,14 @@ class _PasswordScreenState extends State<PasswordScreen> {
     });
   }
 
-  void _onPasswordSubmitted() {
-    if (_isPasswordEmpty() || _isPasswordValid() != null) return;
+  String? _validatePassword() {
+    if (_isPasswordEmpty()) return null;
 
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => const BirthdayScreen(),
-      ),
-    );
+    if (_isPasswordShort()) return "Password is short.";
+    if (_isPasswordLong()) return "Password is long.";
+    if (!_validatePasswordWithRegExp()) return "Password is not valid.";
+
+    return null;
   }
 
   bool _isPasswordEmpty() {
@@ -70,20 +83,10 @@ class _PasswordScreenState extends State<PasswordScreen> {
     return _password.length > 20;
   }
 
-  bool _isPasswordValidOnRegExp() {
+  bool _validatePasswordWithRegExp() {
     return RegExp(
-      r"^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[@$!%*#?&\^])[A-Za-z0-9@$!%*#?&\^]{9,}$",
+      r"^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[@$!%*#?&\^])[A-Za-z0-9@$!%*#?&\^]{8,}$",
     ).hasMatch(_password);
-  }
-
-  String? _isPasswordValid() {
-    if (_isPasswordEmpty()) return null;
-
-    if (_isPasswordShort()) return "Password is short.";
-    if (_isPasswordLong()) return "Password is long.";
-    if (!_isPasswordValidOnRegExp()) return "Password is not valid.";
-
-    return null;
   }
 
   @override
@@ -102,70 +105,44 @@ class _PasswordScreenState extends State<PasswordScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                "Create password",
-                style: TextStyle(
-                  fontSize: Sizes.size20,
-                  fontWeight: FontWeight.w700,
-                ),
+              const Instruction(
+                title: "Create password",
+                description:
+                    "You can safe your account and data in TickTok, and more.",
               ),
-              Gaps.v4,
-              const Text(
-                "You can safe your account and data in TickTok, and more.",
-                style: TextStyle(
-                  fontSize: Sizes.size14,
-                  color: Colors.black54,
-                ),
-              ),
-              Gaps.v16,
-              TextField(
+              FormInput(
+                hintText: "Password",
+                inputController: _passwordController,
+                onSubmitted: _onPasswordSubmitted,
+                validation: _validatePassword,
                 keyboardType: TextInputType.visiblePassword,
-                autocorrect: false,
-                controller: _passwordController,
-                onSubmitted: (value) => _onPasswordSubmitted(),
-                onEditingComplete: () => _onPasswordSubmitted(),
-                obscureText: _hidePassword,
-                decoration: InputDecoration(
-                  hintText: "Password",
-                  errorText: _isPasswordValid(),
-                  suffix: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Gaps.v5,
-                      GestureDetector(
-                        onTap: _onDeleteButtonTapped,
-                        child: FaIcon(
-                          FontAwesomeIcons.solidCircleXmark,
-                          size: Sizes.size14,
-                          color: Colors.grey.shade500,
-                        ),
+                hideInput: _hidePassword,
+                suffixWidget: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Gaps.v5,
+                    GestureDetector(
+                      onTap: _onDeleteButtonTapped,
+                      child: FaIcon(
+                        FontAwesomeIcons.solidCircleXmark,
+                        size: Sizes.size14,
+                        color: Colors.grey.shade500,
                       ),
-                      Gaps.h12,
-                      GestureDetector(
-                        onTap: _onHidingToggleButtonTapped,
-                        child: Icon(
-                          _hidePassword
-                              ? FontAwesomeIcons.eyeSlash
-                              : FontAwesomeIcons.eye,
-                          size: Sizes.size14,
-                          color: Colors.grey.shade500,
-                        ),
+                    ),
+                    Gaps.h12,
+                    GestureDetector(
+                      onTap: _onHidingToggleButtonTapped,
+                      child: Icon(
+                        _hidePassword
+                            ? FontAwesomeIcons.eyeSlash
+                            : FontAwesomeIcons.eye,
+                        size: Sizes.size14,
+                        color: Colors.grey.shade500,
                       ),
-                      Gaps.h5,
-                    ],
-                  ),
-                  enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Colors.grey.shade400,
                     ),
-                  ),
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Colors.grey.shade400,
-                    ),
-                  ),
+                    Gaps.h5,
+                  ],
                 ),
-                cursorColor: Theme.of(context).primaryColor,
               ),
               Gaps.v7,
               const Text(
@@ -177,39 +154,21 @@ class _PasswordScreenState extends State<PasswordScreen> {
               Gaps.v7,
               Column(
                 children: [
-                  Row(
-                    children: [
-                      Icon(
-                        FontAwesomeIcons.circleCheck,
-                        size: 18,
-                        color: _isPasswordShort() ^ _isPasswordLong()
-                            ? Colors.red.shade600
-                            : Colors.green.shade500,
-                      ),
-                      Gaps.h5,
-                      const Text("8 to 20 characters")
-                    ],
+                  InputCheckBox(
+                    content: "8 to 20 characters",
+                    isValidated: _isPasswordShort() ^ _isPasswordLong(),
                   ),
                   Gaps.v3,
-                  Row(
-                    children: [
-                      Icon(
-                        FontAwesomeIcons.circleCheck,
-                        size: 18,
-                        color: !_isPasswordValidOnRegExp()
-                            ? Colors.red.shade600
-                            : Colors.green.shade500,
-                      ),
-                      Gaps.h5,
-                      const Text("Letters, numbers, and special characters")
-                    ],
+                  InputCheckBox(
+                    content: "Letters, numbers, and special characters",
+                    isValidated: !_validatePasswordWithRegExp(),
                   ),
                 ],
               ),
               Gaps.v44,
               FormButton(
                 onButtonTapped: (context) => _onPasswordSubmitted(),
-                disabled: _isPasswordEmpty() || _isPasswordValid() != null,
+                disabled: _isPasswordEmpty() || _validatePassword() != null,
               )
             ],
           ),
