@@ -77,7 +77,7 @@ class _UsernameScreenState extends State<UsernameScreen> {
             const Text(
               "Create username",
               style: TextStyle(
-                fontSize: Sizes.size24,
+                fontSize: Sizes.size20,
                 fontWeight: FontWeight.w700,
               ),
             ),
@@ -85,7 +85,7 @@ class _UsernameScreenState extends State<UsernameScreen> {
             const Text(
               "You can always change this later.",
               style: TextStyle(
-                fontSize: Sizes.size16,
+                fontSize: Sizes.size14,
                 color: Colors.black54,
               ),
             ),

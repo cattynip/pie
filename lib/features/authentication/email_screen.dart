@@ -82,7 +82,7 @@ class _EmailScreenState extends State<EmailScreen> {
               const Text(
                 "What is your email?",
                 style: TextStyle(
-                  fontSize: Sizes.size24,
+                  fontSize: Sizes.size20,
                   fontWeight: FontWeight.w700,
                 ),
               ),
@@ -90,7 +90,7 @@ class _EmailScreenState extends State<EmailScreen> {
               const Text(
                 "You can get notifications, new ticktoks, and more.",
                 style: TextStyle(
-                  fontSize: Sizes.size16,
+                  fontSize: Sizes.size14,
                   color: Colors.black54,
                 ),
               ),

@@ -105,7 +105,7 @@ class _PasswordScreenState extends State<PasswordScreen> {
               const Text(
                 "Create password",
                 style: TextStyle(
-                  fontSize: Sizes.size24,
+                  fontSize: Sizes.size20,
                   fontWeight: FontWeight.w700,
                 ),
               ),
@@ -113,7 +113,7 @@ class _PasswordScreenState extends State<PasswordScreen> {
               const Text(
                 "You can safe your account and data in TickTok, and more.",
                 style: TextStyle(
-                  fontSize: Sizes.size16,
+                  fontSize: Sizes.size14,
                   color: Colors.black54,
                 ),
               ),
