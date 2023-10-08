@@ -57,11 +57,7 @@ class _BirthdayScreenState extends State<BirthdayScreen> {
     return GestureDetector(
       onTap: _onScaffoldTapped,
       child: Scaffold(
-        backgroundColor: Colors.white,
         appBar: AppBar(
-          backgroundColor: Colors.white,
-          foregroundColor: Colors.black,
-          elevation: 0,
           title: const Text("Sign up"),
         ),
         body: Padding(
@@ -92,9 +88,7 @@ class _BirthdayScreenState extends State<BirthdayScreen> {
           ),
         ),
         bottomNavigationBar: BottomAppBar(
-          color: Colors.white,
-          elevation: 0,
-          height: 200,
+          height: 240,
           child: Container(
             decoration: const BoxDecoration(
               color: Colors.white,
