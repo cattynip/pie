@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:ticktok/constants/sizes.dart';
+import 'package:ticktok/features/authentication/birthday_screen.dart';
 import 'package:ticktok/features/authentication/signup_screen.dart';
+import 'package:ticktok/features/onboarding/interests_screen.dart';
 
 void main() {
   runApp(const TickTokApp());
@@ -18,10 +20,15 @@ class TickTokApp extends StatelessWidget {
         scaffoldBackgroundColor: Colors.white,
         primaryColor: const Color(0xFFE9435A),
         useMaterial3: true,
+        canvasColor: Colors.white,
+        bottomAppBarTheme: const BottomAppBarTheme(
+          color: Colors.white,
+          elevation: 0,
+        ),
         appBarTheme: const AppBarTheme(
           backgroundColor: Colors.white,
           foregroundColor: Colors.black,
-          elevation: 0,
+          surfaceTintColor: Colors.white,
           titleTextStyle: TextStyle(
             fontSize: Sizes.size16 + Sizes.size2,
             fontWeight: FontWeight.w600,
@@ -30,7 +37,7 @@ class TickTokApp extends StatelessWidget {
           centerTitle: true,
         ),
       ),
-      home: const SignUpScreen(),
+      home: const InterestsScreen(),
     );
   }
 }
