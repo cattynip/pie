@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ticktok/constants/sizes.dart';
+import 'package:ticktok/features/authentication/signup_screen.dart';
+import 'package:ticktok/features/main_navigation/main_navigation_screen.dart';
 import 'package:ticktok/features/onboarding/interests_screen.dart';
 
 void main() {
@@ -35,7 +37,7 @@ class TickTokApp extends StatelessWidget {
           centerTitle: true,
         ),
       ),
-      home: const InterestsScreen(),
+      home: const MainNavigationScreen(),
     );
   }
 }

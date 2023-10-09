@@ -45,10 +45,11 @@ class _BirthdayScreenState extends State<BirthdayScreen> {
   }
 
   void _onBirthdaySubmitted() {
-    Navigator.of(context).push(
+    Navigator.of(context).pushAndRemoveUntil(
       MaterialPageRoute(
         builder: (context) => const InterestsScreen(),
       ),
+      (router) => false,
     );
   }
 

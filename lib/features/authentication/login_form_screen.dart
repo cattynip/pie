@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ticktok/constants/gaps.dart';
 import 'package:ticktok/constants/sizes.dart';
 import 'package:ticktok/features/authentication/widgets/form_button.dart';
+import 'package:ticktok/features/onboarding/interests_screen.dart';
 
 class LogInFormScreen extends StatefulWidget {
   const LogInFormScreen({super.key});
@@ -20,6 +21,13 @@ class _LogInFormScreenState extends State<LogInFormScreen> {
       final bool isFormValidated = _formKey.currentState!.validate();
       if (isFormValidated) {
         _formKey.currentState!.save();
+
+        Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(
+            builder: (context) => const InterestsScreen(),
+          ),
+          (route) => false,
+        );
       }
     }
   }
