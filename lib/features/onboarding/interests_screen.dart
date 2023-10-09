@@ -124,51 +124,45 @@ class InterestsScreen extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(
             horizontal: Sizes.size20,
+            vertical: Sizes.size4,
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Flexible(
-                child: FractionallySizedBox(
-                  widthFactor: 0.97,
-                  heightFactor: 0.8,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Colors.black.withOpacity(0.1),
-                      ),
-                      borderRadius: BorderRadius.circular(Sizes.size5),
+              Expanded(
+                child: Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Colors.black.withOpacity(0.1),
                     ),
-                    child: const Center(
-                      child: Text(
-                        "Skip",
-                        style: TextStyle(
-                          fontSize: Sizes.size16,
-                        ),
-                        textAlign: TextAlign.center,
+                    borderRadius: BorderRadius.circular(Sizes.size5),
+                  ),
+                  child: const Center(
+                    child: Text(
+                      "Skip",
+                      style: TextStyle(
+                        fontSize: Sizes.size16,
                       ),
+                      textAlign: TextAlign.center,
                     ),
                   ),
                 ),
               ),
-              Flexible(
-                child: FractionallySizedBox(
-                  widthFactor: 0.97,
-                  heightFactor: 0.8,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).primaryColor,
-                      borderRadius: BorderRadius.circular(Sizes.size5),
-                    ),
-                    child: const Center(
-                      child: Text(
-                        "Next",
-                        style: TextStyle(
-                          fontSize: Sizes.size16,
-                          color: Colors.white,
-                        ),
-                        textAlign: TextAlign.center,
+              Gaps.h14,
+              Expanded(
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).primaryColor,
+                    borderRadius: BorderRadius.circular(Sizes.size5),
+                  ),
+                  child: const Center(
+                    child: Text(
+                      "Next",
+                      style: TextStyle(
+                        fontSize: Sizes.size16,
+                        color: Colors.white,
                       ),
+                      textAlign: TextAlign.center,
                     ),
                   ),
                 ),
