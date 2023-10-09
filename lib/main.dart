@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:ticktok/constants/sizes.dart';
-import 'package:ticktok/features/authentication/birthday_screen.dart';
-import 'package:ticktok/features/authentication/signup_screen.dart';
 import 'package:ticktok/features/onboarding/interests_screen.dart';
 
 void main() {

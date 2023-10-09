@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:ticktok/constants/gaps.dart';
 import 'package:ticktok/constants/sizes.dart';
+import 'package:ticktok/features/onboarding/widgets/bottom_button.dart';
+import 'package:ticktok/features/onboarding/widgets/interest_button.dart';
 
 const interests = [
   "Daily Life",
@@ -43,16 +45,59 @@ const interests = [
   "Home & Garden",
 ];
 
-class InterestsScreen extends StatelessWidget {
+class InterestsScreen extends StatefulWidget {
   const InterestsScreen({super.key});
+
+  @override
+  State<InterestsScreen> createState() => _InterestsScreenState();
+}
+
+class _InterestsScreenState extends State<InterestsScreen> {
+  final ScrollController _scrollController = ScrollController();
+  bool isTitleVisible = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _scrollController.addListener(() {
+      final bool shouldTitleBeShown = _scrollController.offset > 110;
+
+      if (shouldTitleBeShown) {
+        if (isTitleVisible) return;
+
+        setState(() {
+          isTitleVisible = true;
+        });
+      } else {
+        if (!isTitleVisible) return;
+
+        setState(() {
+          isTitleVisible = false;
+        });
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Choose your interests"),
+        title: AnimatedOpacity(
+          opacity: isTitleVisible ? 1 : 0,
+          duration: const Duration(milliseconds: 300),
+          child: const Text("Choose your interests"),
+        ),
       ),
       body: SingleChildScrollView(
+        controller: _scrollController,
         child: Padding(
           padding: const EdgeInsets.symmetric(
             horizontal: Sizes.size24,
@@ -84,34 +129,7 @@ class InterestsScreen extends StatelessWidget {
                 runSpacing: 20,
                 children: [
                   for (var interest in interests)
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: Sizes.size14,
-                        horizontal: Sizes.size16,
-                      ),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(Sizes.size96),
-                        color: Colors.white,
-                        border: Border.all(
-                          color: Colors.black.withOpacity(0.1),
-                        ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.12),
-                            offset: const Offset(0, 0),
-                            blurRadius: 10,
-                            spreadRadius: 0.4,
-                          )
-                        ],
-                      ),
-                      child: Text(
-                        interest,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontSize: Sizes.size14 + Sizes.size1,
-                        ),
-                      ),
-                    )
+                    InterestButton(interest: interest)
                 ],
               ),
               Gaps.v20
@@ -129,44 +147,17 @@ class InterestsScreen extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Expanded(
-                child: Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: Colors.black.withOpacity(0.1),
-                    ),
-                    borderRadius: BorderRadius.circular(Sizes.size5),
-                  ),
-                  child: const Center(
-                    child: Text(
-                      "Skip",
-                      style: TextStyle(
-                        fontSize: Sizes.size16,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                ),
+              BottomButton(
+                content: "Skip",
+                isActive: false,
+                onButtonTapped: () {},
               ),
               Gaps.h14,
-              Expanded(
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).primaryColor,
-                    borderRadius: BorderRadius.circular(Sizes.size5),
-                  ),
-                  child: const Center(
-                    child: Text(
-                      "Next",
-                      style: TextStyle(
-                        fontSize: Sizes.size16,
-                        color: Colors.white,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                ),
-              )
+              BottomButton(
+                content: "Next",
+                isActive: true,
+                onButtonTapped: () {},
+              ),
             ],
           ),
         ),

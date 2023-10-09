@@ -20,7 +20,6 @@ class _LogInFormScreenState extends State<LogInFormScreen> {
       final bool isFormValidated = _formKey.currentState!.validate();
       if (isFormValidated) {
         _formKey.currentState!.save();
-        print(formData);
       }
     }
   }

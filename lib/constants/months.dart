@@ -17,8 +17,6 @@ class Months {
   static String convertFromNumberToString(int month) {
     if (month < 1 || month > 12) return "";
 
-    print(month);
-
     return months[month - 1];
   }
 }
