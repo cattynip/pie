@@ -15,28 +15,26 @@ class BottomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: GestureDetector(
-        onTap: onButtonTapped,
-        child: Container(
-          decoration: BoxDecoration(
-            color: isActive ? Theme.of(context).primaryColor : Colors.white,
-            borderRadius: BorderRadius.circular(Sizes.size5),
-            border: isActive
-                ? null
-                : Border.all(
-                    color: Colors.black.withOpacity(0.1),
-                  ),
-          ),
-          child: Center(
-            child: Text(
-              content,
-              style: TextStyle(
-                fontSize: Sizes.size16,
-                color: isActive ? Colors.white : Colors.black,
-              ),
-              textAlign: TextAlign.center,
+    return GestureDetector(
+      onTap: onButtonTapped,
+      child: Container(
+        decoration: BoxDecoration(
+          color: isActive ? Theme.of(context).primaryColor : Colors.white,
+          borderRadius: BorderRadius.circular(Sizes.size5),
+          border: isActive
+              ? null
+              : Border.all(
+                  color: Colors.black.withOpacity(0.1),
+                ),
+        ),
+        child: Center(
+          child: Text(
+            content,
+            style: TextStyle(
+              fontSize: Sizes.size16,
+              color: isActive ? Colors.white : Colors.black,
             ),
+            textAlign: TextAlign.center,
           ),
         ),
       ),

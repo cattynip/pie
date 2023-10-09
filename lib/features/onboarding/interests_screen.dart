@@ -160,16 +160,20 @@ class _InterestsScreenState extends State<InterestsScreen> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              BottomButton(
-                content: "Skip",
-                isActive: false,
-                onButtonTapped: _onNextButtomTapped,
+              Expanded(
+                child: BottomButton(
+                  content: "Skip",
+                  isActive: false,
+                  onButtonTapped: _onNextButtomTapped,
+                ),
               ),
               Gaps.h14,
-              BottomButton(
-                content: "Next",
-                isActive: true,
-                onButtonTapped: _onNextButtomTapped,
+              Expanded(
+                child: BottomButton(
+                  content: "Next",
+                  isActive: true,
+                  onButtonTapped: _onNextButtomTapped,
+                ),
               ),
             ],
           ),

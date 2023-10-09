@@ -1,6 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:ticktok/constants/gaps.dart';
 import 'package:ticktok/constants/sizes.dart';
+import 'package:ticktok/features/onboarding/widgets/bottom_button.dart';
+import 'package:ticktok/features/onboarding/widgets/tutorial_piece.dart';
+
+enum Direction {
+  right,
+  left,
+}
+
+enum Page {
+  first,
+  second,
+}
 
 class TutorialScreen extends StatefulWidget {
   const TutorialScreen({super.key});
@@ -10,105 +21,77 @@ class TutorialScreen extends StatefulWidget {
 }
 
 class _TutorialScreenState extends State<TutorialScreen> {
+  Direction _direction = Direction.right;
+  Page _showingPage = Page.first;
+
+  void _onPanUpdated(DragUpdateDetails details) {
+    final bool scrollingToRight = details.delta.dx > 0;
+    if (scrollingToRight) {
+      setState(() {
+        _direction = Direction.right;
+      });
+    } else {
+      setState(() {
+        _direction = Direction.left;
+      });
+    }
+  }
+
+  void _onPanEnded(DragEndDetails details) {
+    final bool isStrongEnough = details.velocity.pixelsPerSecond.dx.abs() > 500;
+    if (!isStrongEnough) return;
+
+    if (_direction == Direction.right) {
+      setState(() {
+        _showingPage = Page.first;
+      });
+    }
+
+    if (_direction == Direction.left) {
+      setState(() {
+        _showingPage = Page.second;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return const DefaultTabController(
-      length: 3,
+    return GestureDetector(
+      onPanUpdate: _onPanUpdated,
+      onPanEnd: _onPanEnded,
       child: Scaffold(
         body: SafeArea(
-          child: TabBarView(
-            children: [
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: Sizes.size24),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Gaps.v36,
-                    Text(
-                      "Swip Up!",
-                      style: TextStyle(
-                        fontSize: Sizes.size36,
-                        fontWeight: FontWeight.w700,
-                        height: 1.2,
-                        letterSpacing: 0.5,
-                      ),
-                    ),
-                    Gaps.v8,
-                    Text(
-                      "Videos are personalized for you based on what you watch, like and share.",
-                      style: TextStyle(
-                        fontSize: Sizes.size16 + Sizes.size2,
-                        fontWeight: FontWeight.w300,
-                      ),
-                    ),
-                  ],
-                ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: Sizes.size24,
+              vertical: Sizes.size32,
+            ),
+            child: AnimatedCrossFade(
+              crossFadeState: _showingPage == Page.first
+                  ? CrossFadeState.showFirst
+                  : CrossFadeState.showSecond,
+              duration: const Duration(milliseconds: 150),
+              firstChild: const TutorialPiece(
+                title: "Swip Up!",
+                descrition:
+                    "Videos are personalized for you based on what you watch, like and share.",
               ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: Sizes.size24),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Gaps.v36,
-                    Text(
-                      "Follow the Rules!",
-                      style: TextStyle(
-                        fontSize: Sizes.size36,
-                        fontWeight: FontWeight.w700,
-                        height: 1.2,
-                        letterSpacing: 0.5,
-                      ),
-                    ),
-                    Gaps.v8,
-                    Text(
-                      "Videos are personalized for you based on what you watch, like and share.",
-                      style: TextStyle(
-                        fontSize: Sizes.size16 + Sizes.size2,
-                        fontWeight: FontWeight.w300,
-                      ),
-                    ),
-                  ],
-                ),
+              secondChild: const TutorialPiece(
+                title: "Follow the Rules!",
+                descrition: "Take care of one another! Please!",
               ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: Sizes.size24),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Gaps.v36,
-                    Text(
-                      "Enjoy the Ride!",
-                      style: TextStyle(
-                        fontSize: Sizes.size36,
-                        fontWeight: FontWeight.w700,
-                        height: 1.2,
-                        letterSpacing: 0.5,
-                      ),
-                    ),
-                    Gaps.v8,
-                    Text(
-                      "Videos are personalized for you based on what you watch, like and share.",
-                      style: TextStyle(
-                        fontSize: Sizes.size16 + Sizes.size2,
-                        fontWeight: FontWeight.w300,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
+            ),
           ),
         ),
         bottomNavigationBar: BottomAppBar(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              TabPageSelector(
-                indicatorSize: Sizes.size10,
-                color: Colors.white,
-                selectedColor: Colors.black45,
-              ),
-            ],
+          child: AnimatedOpacity(
+            duration: const Duration(milliseconds: 150),
+            opacity: _showingPage == Page.first ? 0 : 1,
+            child: BottomButton(
+              content: "Dive into the App!",
+              isActive: true,
+              onButtonTapped: () => {},
+            ),
           ),
         ),
       ),
