@@ -96,44 +96,48 @@ class _InterestsScreenState extends State<InterestsScreen> {
           child: const Text("Choose your interests"),
         ),
       ),
-      body: SingleChildScrollView(
+      body: Scrollbar(
         controller: _scrollController,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: Sizes.size24,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Gaps.v10,
-              const Text(
-                "Choose your interests",
-                style: TextStyle(
-                  fontSize: Sizes.size36,
-                  fontWeight: FontWeight.w700,
-                  height: 1.2,
-                  letterSpacing: 0.5,
+        thickness: 2,
+        child: SingleChildScrollView(
+          controller: _scrollController,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: Sizes.size24,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Gaps.v10,
+                const Text(
+                  "Choose your interests",
+                  style: TextStyle(
+                    fontSize: Sizes.size36,
+                    fontWeight: FontWeight.w700,
+                    height: 1.2,
+                    letterSpacing: 0.5,
+                  ),
                 ),
-              ),
-              Gaps.v8,
-              const Text(
-                "Get better video recommendations.",
-                style: TextStyle(
-                  fontSize: Sizes.size16 + Sizes.size2,
-                  fontWeight: FontWeight.w300,
+                Gaps.v8,
+                const Text(
+                  "Get better video recommendations.",
+                  style: TextStyle(
+                    fontSize: Sizes.size16 + Sizes.size2,
+                    fontWeight: FontWeight.w300,
+                  ),
                 ),
-              ),
-              Gaps.v44,
-              Wrap(
-                spacing: 12,
-                runSpacing: 20,
-                children: [
-                  for (var interest in interests)
-                    InterestButton(interest: interest)
-                ],
-              ),
-              Gaps.v20
-            ],
+                Gaps.v44,
+                Wrap(
+                  spacing: 12,
+                  runSpacing: 20,
+                  children: [
+                    for (var interest in interests)
+                      InterestButton(interest: interest)
+                  ],
+                ),
+                Gaps.v20
+              ],
+            ),
           ),
         ),
       ),
