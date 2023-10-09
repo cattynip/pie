@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ticktok/constants/gaps.dart';
 import 'package:ticktok/constants/sizes.dart';
+import 'package:ticktok/features/onboarding/tutorial_screen.dart';
 import 'package:ticktok/features/onboarding/widgets/bottom_button.dart';
 import 'package:ticktok/features/onboarding/widgets/interest_button.dart';
 
@@ -86,6 +87,14 @@ class _InterestsScreenState extends State<InterestsScreen> {
     super.dispose();
   }
 
+  void _onNextButtomTapped() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => const TutorialScreen(),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -98,7 +107,7 @@ class _InterestsScreenState extends State<InterestsScreen> {
       ),
       body: Scrollbar(
         controller: _scrollController,
-        thickness: 2,
+        thickness: Sizes.size2,
         child: SingleChildScrollView(
           controller: _scrollController,
           child: Padding(
@@ -128,8 +137,8 @@ class _InterestsScreenState extends State<InterestsScreen> {
                 ),
                 Gaps.v44,
                 Wrap(
-                  spacing: 12,
-                  runSpacing: 20,
+                  spacing: Sizes.size12,
+                  runSpacing: Sizes.size20,
                   children: [
                     for (var interest in interests)
                       InterestButton(interest: interest)
@@ -154,13 +163,13 @@ class _InterestsScreenState extends State<InterestsScreen> {
               BottomButton(
                 content: "Skip",
                 isActive: false,
-                onButtonTapped: () {},
+                onButtonTapped: _onNextButtomTapped,
               ),
               Gaps.h14,
               BottomButton(
                 content: "Next",
                 isActive: true,
-                onButtonTapped: () {},
+                onButtonTapped: _onNextButtomTapped,
               ),
             ],
           ),
