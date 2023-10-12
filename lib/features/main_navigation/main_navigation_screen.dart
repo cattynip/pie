@@ -33,28 +33,29 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: screens[_selectedIdx],
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _selectedIdx,
-        onTap: _onBottomNavigationBarItemTapped,
-        selectedItemColor: Theme.of(context).primaryColor,
-        unselectedItemColor: Colors.black.withOpacity(0.5),
-        type: BottomNavigationBarType.shifting, // ...wow
-        items: const [
-          BottomNavigationBarItem(
-            icon: FaIcon(FontAwesomeIcons.house),
+      bottomNavigationBar: NavigationBar(
+        selectedIndex: _selectedIdx,
+        onDestinationSelected: _onBottomNavigationBarItemTapped,
+        labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
+        backgroundColor: Colors.white,
+        indicatorColor: Colors.deepPurple.shade200,
+        surfaceTintColor: Colors.amber,
+        destinations: const [
+          NavigationDestination(
+            icon: FaIcon(
+              FontAwesomeIcons.house,
+              color: Colors.black,
+            ),
             label: "Home",
-            tooltip: "Wanna go home?",
-            backgroundColor: Colors.amber,
+            tooltip: "Go to home",
           ),
-          BottomNavigationBarItem(
-            icon: FaIcon(FontAwesomeIcons.magnifyingGlass),
+          NavigationDestination(
+            icon: FaIcon(
+              FontAwesomeIcons.magnifyingGlass,
+              color: Colors.black,
+            ),
             label: "Search",
-            backgroundColor: Colors.blue,
-          ),
-          BottomNavigationBarItem(
-            icon: FaIcon(FontAwesomeIcons.gear),
-            label: "Settings",
-            backgroundColor: Colors.lime,
+            tooltip: "Search some terms",
           ),
         ],
       ),
