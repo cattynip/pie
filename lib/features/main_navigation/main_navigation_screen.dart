@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -31,34 +32,26 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: screens[_selectedIdx],
-      bottomNavigationBar: NavigationBar(
-        selectedIndex: _selectedIdx,
-        onDestinationSelected: _onBottomNavigationBarItemTapped,
-        labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
-        backgroundColor: Colors.white,
-        indicatorColor: Colors.deepPurple.shade200,
-        surfaceTintColor: Colors.amber,
-        destinations: const [
-          NavigationDestination(
-            icon: FaIcon(
-              FontAwesomeIcons.house,
-              color: Colors.black,
-            ),
+    // Cupertino? Terrible.
+    // To be honest, I planned to use Cupertino for the next project because I love the unique styling and designs of Apple, but I just realized that Flutter was built by Google.
+    return CupertinoTabScaffold(
+      tabBar: CupertinoTabBar(
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(CupertinoIcons.house),
             label: "Home",
-            tooltip: "Go to home",
           ),
-          NavigationDestination(
-            icon: FaIcon(
-              FontAwesomeIcons.magnifyingGlass,
-              color: Colors.black,
-            ),
+          BottomNavigationBarItem(
+            icon: Icon(CupertinoIcons.search),
             label: "Search",
-            tooltip: "Search some terms",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(CupertinoIcons.gear),
+            label: "Setting",
           ),
         ],
       ),
+      tabBuilder: (context, index) => screens[_selectedIdx],
     );
   }
 }
