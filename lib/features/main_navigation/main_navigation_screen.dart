@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:ticktok/constants/gaps.dart';
+import 'package:ticktok/features/main_navigation/widgets/nav_tab.dart';
 
 class MainNavigationScreen extends StatefulWidget {
   const MainNavigationScreen({super.key});
@@ -24,7 +26,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
     ),
   ];
 
-  void _onBottomNavigationBarItemTapped(int index) {
+  void _onBottomNavBarItemTapped(int index) {
     setState(() {
       _selectedIdx = index;
     });
@@ -34,24 +36,45 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
   Widget build(BuildContext context) {
     // Cupertino? Terrible.
     // To be honest, I planned to use Cupertino for the next project because I love the unique styling and designs of Apple, but I just realized that Flutter was built by Google.
-    return CupertinoTabScaffold(
-      tabBar: CupertinoTabBar(
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(CupertinoIcons.house),
-            label: "Home",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(CupertinoIcons.search),
-            label: "Search",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(CupertinoIcons.gear),
-            label: "Setting",
-          ),
-        ],
+    return Scaffold(
+      bottomNavigationBar: BottomAppBar(
+        color: Colors.black,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            NavTab(
+              tabIcon: FontAwesomeIcons.house,
+              tabContent: "Home",
+              isSelected: _selectedIdx == 0,
+              onNavTabTapped: () => _onBottomNavBarItemTapped(0),
+            ),
+            NavTab(
+              tabIcon: FontAwesomeIcons.magnifyingGlass,
+              tabContent: "Discover",
+              isSelected: _selectedIdx == 1,
+              onNavTabTapped: () => _onBottomNavBarItemTapped(1),
+            ),
+            NavTab(
+              tabIcon: FontAwesomeIcons.plus,
+              tabContent: "Home",
+              isSelected: false,
+              onNavTabTapped: () => {},
+            ),
+            NavTab(
+              tabIcon: FontAwesomeIcons.inbox,
+              tabContent: "Inbox",
+              isSelected: _selectedIdx == 3,
+              onNavTabTapped: () => _onBottomNavBarItemTapped(3),
+            ),
+            NavTab(
+              tabIcon: FontAwesomeIcons.user,
+              tabContent: "Profile",
+              isSelected: _selectedIdx == 4,
+              onNavTabTapped: () => _onBottomNavBarItemTapped(4),
+            ),
+          ],
+        ),
       ),
-      tabBuilder: (context, index) => screens[_selectedIdx],
     );
   }
 }
