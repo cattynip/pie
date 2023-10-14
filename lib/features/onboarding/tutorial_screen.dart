@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ticktok/constants/sizes.dart';
 import 'package:ticktok/features/main_navigation/main_navigation_screen.dart';
-import 'package:ticktok/features/onboarding/interests_screen.dart';
 import 'package:ticktok/features/onboarding/widgets/bottom_button.dart';
 import 'package:ticktok/features/onboarding/widgets/tutorial_piece.dart';
 

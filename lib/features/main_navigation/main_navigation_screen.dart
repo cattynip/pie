@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:ticktok/constants/gaps.dart';
 import 'package:ticktok/features/main_navigation/stf_screen.dart';
 import 'package:ticktok/features/main_navigation/widgets/nav_tab.dart';
+import 'package:ticktok/features/main_navigation/widgets/post_video_button.dart';
 
 class MainNavigationScreen extends StatefulWidget {
   const MainNavigationScreen({super.key});
@@ -22,6 +24,20 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
     setState(() {
       _selectedIdx = index;
     });
+  }
+
+  void _onPostVideoButtonTapped() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        fullscreenDialog: true,
+        builder: (context) => Scaffold(
+          appBar: AppBar(
+            title: const Text("Record your video."),
+          ),
+          body: const Text("Hello!"),
+        ),
+      ),
+    );
   }
 
   @override
@@ -51,6 +67,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
         color: Colors.black,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             NavTab(
               tabIcon: FontAwesomeIcons.house,
@@ -66,6 +83,9 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
               isSelected: _selectedIdx == 1,
               onNavTabTapped: () => _onBottomNavBarItemTapped(1),
             ),
+            Gaps.h24,
+            PostVideoButton(onPostVideoButtonTapped: _onPostVideoButtonTapped),
+            Gaps.h24,
             NavTab(
               tabIcon: FontAwesomeIcons.message,
               selectedTabIcon: FontAwesomeIcons.solidMessage,
