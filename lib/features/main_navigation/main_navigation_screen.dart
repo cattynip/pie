@@ -1,7 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:ticktok/constants/gaps.dart';
+import 'package:ticktok/features/main_navigation/stf_screen.dart';
 import 'package:ticktok/features/main_navigation/widgets/nav_tab.dart';
 
 class MainNavigationScreen extends StatefulWidget {
@@ -14,15 +13,26 @@ class MainNavigationScreen extends StatefulWidget {
 class _MainNavigationScreenState extends State<MainNavigationScreen> {
   int _selectedIdx = 0;
 
+  // If the elements of this list were the same widgets,
+  // they would have shared the same variables, which means you have to add GlobalKey thing to identify what widget is what.
+  // However, if you add that property, they will be disposed and re-rendered every time the user moves between the pages.
+  // Which means they will no longer save the data when the user escapes from that page because that page will be disposed and the data in that page will also be disposed.:wq
+
   final List<Widget> screens = [
-    const Center(
-      child: Text("Home"),
+    StfScreen(
+      key: GlobalKey(),
     ),
-    const Center(
-      child: Text("Search"),
+    StfScreen(
+      key: GlobalKey(),
     ),
-    const Center(
-      child: Text("Settings"),
+    StfScreen(
+      key: GlobalKey(),
+    ),
+    StfScreen(
+      key: GlobalKey(),
+    ),
+    StfScreen(
+      key: GlobalKey(),
     ),
   ];
 
@@ -34,9 +44,8 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // Cupertino? Terrible.
-    // To be honest, I planned to use Cupertino for the next project because I love the unique styling and designs of Apple, but I just realized that Flutter was built by Google.
     return Scaffold(
+      body: screens.elementAt(_selectedIdx),
       bottomNavigationBar: BottomAppBar(
         color: Colors.black,
         child: Row(
@@ -44,30 +53,28 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
           children: [
             NavTab(
               tabIcon: FontAwesomeIcons.house,
+              selectedTabIcon: FontAwesomeIcons.house,
               tabContent: "Home",
               isSelected: _selectedIdx == 0,
               onNavTabTapped: () => _onBottomNavBarItemTapped(0),
             ),
             NavTab(
-              tabIcon: FontAwesomeIcons.magnifyingGlass,
+              tabIcon: FontAwesomeIcons.compass,
+              selectedTabIcon: FontAwesomeIcons.solidCompass,
               tabContent: "Discover",
               isSelected: _selectedIdx == 1,
               onNavTabTapped: () => _onBottomNavBarItemTapped(1),
             ),
             NavTab(
-              tabIcon: FontAwesomeIcons.plus,
-              tabContent: "Home",
-              isSelected: false,
-              onNavTabTapped: () => {},
-            ),
-            NavTab(
-              tabIcon: FontAwesomeIcons.inbox,
+              tabIcon: FontAwesomeIcons.message,
+              selectedTabIcon: FontAwesomeIcons.solidMessage,
               tabContent: "Inbox",
               isSelected: _selectedIdx == 3,
               onNavTabTapped: () => _onBottomNavBarItemTapped(3),
             ),
             NavTab(
               tabIcon: FontAwesomeIcons.user,
+              selectedTabIcon: FontAwesomeIcons.solidUser,
               tabContent: "Profile",
               isSelected: _selectedIdx == 4,
               onNavTabTapped: () => _onBottomNavBarItemTapped(4),

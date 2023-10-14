@@ -3,13 +3,14 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:ticktok/constants/gaps.dart';
 
 class NavTab extends StatelessWidget {
-  final IconData tabIcon;
+  final IconData tabIcon, selectedTabIcon;
   final String tabContent;
   final bool isSelected;
   final void Function() onNavTabTapped;
 
   const NavTab({
     required this.tabIcon,
+    required this.selectedTabIcon,
     required this.tabContent,
     required this.onNavTabTapped,
     required this.isSelected,
@@ -32,7 +33,7 @@ class NavTab extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 FaIcon(
-                  tabIcon,
+                  isSelected ? selectedTabIcon : tabIcon,
                   color: Colors.white,
                   size: 28,
                 ),
