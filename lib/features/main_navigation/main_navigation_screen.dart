@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:ticktok/constants/gaps.dart';
-import 'package:ticktok/features/main_navigation/stf_screen.dart';
 import 'package:ticktok/features/main_navigation/widgets/nav_tab.dart';
 import 'package:ticktok/features/main_navigation/widgets/post_video_button.dart';
+import 'package:ticktok/features/videos/video_timeline_screen.dart';
 
 class MainNavigationScreen extends StatefulWidget {
   const MainNavigationScreen({super.key});
@@ -14,11 +14,6 @@ class MainNavigationScreen extends StatefulWidget {
 
 class _MainNavigationScreenState extends State<MainNavigationScreen> {
   int _selectedIdx = 0;
-
-  // If the elements of this list were the same widgets,
-  // they would have shared the same variables, which means you have to add GlobalKey thing to identify what widget is what.
-  // However, if you add that property, they will be disposed and re-rendered every time the user moves between the pages.
-  // Which means they will no longer save the data when the user escapes from that page because that page will be disposed and the data in that page will also be disposed.:wq
 
   void _onBottomNavBarItemTapped(int index) {
     setState(() {
@@ -47,19 +42,19 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
         children: [
           Offstage(
             offstage: _selectedIdx != 0,
-            child: const StfScreen(),
+            child: const VideoTimelineScreen(),
           ),
           Offstage(
             offstage: _selectedIdx != 1,
-            child: const StfScreen(),
+            child: Container(),
           ),
           Offstage(
             offstage: _selectedIdx != 3,
-            child: const StfScreen(),
+            child: Container(),
           ),
           Offstage(
             offstage: _selectedIdx != 4,
-            child: const StfScreen(),
+            child: Container(),
           ),
         ],
       ),
