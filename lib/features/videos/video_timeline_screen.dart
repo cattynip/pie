@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ticktok/constants/sizes.dart';
+import 'package:ticktok/features/videos/video_post.dart';
 
 class VideoTimelineScreen extends StatefulWidget {
   const VideoTimelineScreen({super.key});
@@ -9,8 +9,10 @@ class VideoTimelineScreen extends StatefulWidget {
 }
 
 class _VideoTimelineScreenState extends State<VideoTimelineScreen> {
-  int _itemCount = 6;
   final PageController _pageController = PageController();
+  final Duration _videoAnimationDuration = const Duration(milliseconds: 150);
+  final Curve _videoAnimationCurve = Curves.ease;
+  int _itemCount = 6;
 
   final List<Color> colorList = [
     Colors.brown,
@@ -32,8 +34,8 @@ class _VideoTimelineScreenState extends State<VideoTimelineScreen> {
   void _onVideoTimelinePageChanged(int pageIndex) {
     _pageController.animateToPage(
       pageIndex,
-      duration: const Duration(milliseconds: 150),
-      curve: Curves.ease,
+      duration: _videoAnimationDuration,
+      curve: _videoAnimationCurve,
     );
 
     final shouldBeRefreshed = pageIndex == _itemCount - 1;
@@ -45,6 +47,13 @@ class _VideoTimelineScreenState extends State<VideoTimelineScreen> {
     }
   }
 
+  void _onVideoFinished() {
+    _pageController.nextPage(
+      duration: _videoAnimationDuration,
+      curve: _videoAnimationCurve,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return PageView.builder(
@@ -53,17 +62,8 @@ class _VideoTimelineScreenState extends State<VideoTimelineScreen> {
       onPageChanged: _onVideoTimelinePageChanged,
       itemCount: _itemCount,
       itemBuilder: (context, index) {
-        return Container(
-          color: colorList[index],
-          child: Center(
-            child: Text(
-              "Video number $index",
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: Sizes.size32,
-              ),
-            ),
-          ),
+        return VideoPost(
+          onVideoFinished: _onVideoFinished,
         );
       },
     );

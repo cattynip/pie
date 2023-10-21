@@ -17,6 +17,6 @@ dev_dependencies:
   flutter_lints: ^2.0.0
 flutter:
   uses-material-design: true
-assets:
-  - assets/videos/video_1.mp4
-  - assets/videos/video_2.mp4
+  assets:
+    - assets/videos/video_1.mp4
+    - assets/videos/video_2.mp4
